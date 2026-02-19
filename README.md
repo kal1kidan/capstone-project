@@ -2,41 +2,41 @@
 
 ## Capstone Project – 10 Academy AI Mastery Program
 
-This project analyzes **Google Play Store reviews** from Ethiopian mobile banking applications to extract structured business insights from unstructured customer feedback.
+This project analyzes **Google Play Store reviews** from Ethiopian mobile banking applications to transform unstructured customer feedback into structured, actionable business insights.
 
-It demonstrates a **full end-to-end data pipeline**, including:
+It implements a **production-style end-to-end data pipeline**, including:
 
 * Data scraping
 * Data cleaning & preprocessing
 * Sentiment analysis (NLP)
 * Thematic extraction
-* Database integration (PostgreSQL)
+* PostgreSQL database integration
 * Insight generation & visualization
-* Engineering improvements (modular code, testing, CI/CD)
+* Engineering enhancements (modularization, testing, CI/CD)
 
-The goal is to transform raw app reviews into **actionable product intelligence** for banking stakeholders.
+The objective is to convert raw customer reviews into **data-driven product intelligence** for banking stakeholders.
 
 ---
 
 # 🎯 Business Problem
 
-Mobile banking users frequently report issues such as:
+Mobile banking platforms receive continuous user feedback highlighting issues such as:
 
-* App crashes
+* Application crashes
 * Transaction failures
+* Login difficulties
 * Poor UI/UX
-* Login problems
-* Feature limitations
+* Missing features
 
-However, these reviews are unstructured and difficult to analyze at scale.
+However, this feedback is unstructured and difficult to analyze at scale.
 
-This project builds an automated NLP pipeline that converts customer reviews into measurable:
+This project builds an automated NLP pipeline that converts raw review text into measurable:
 
-* Sentiment insights
-* Recurring themes
-* Comparative bank performance metrics
+* Sentiment metrics
+* Recurring issue themes
+* Comparative performance indicators across banks
 
-Enabling banks to prioritize improvements using data-driven decisions.
+Enabling product teams to prioritize improvements using structured evidence rather than anecdotal feedback.
 
 ---
 
@@ -52,22 +52,19 @@ mobile-banking-review-analysis/
 │   ├── themes.py
 │   └── database.py
 │
-├── notebooks/                       # Exploratory & analysis notebooks
-│
+├── notebooks/                       # Exploratory analysis
 ├── data/
 │   ├── raw/
 │   └── processed/
-│
 ├── tests/                           # Pytest unit tests
-│
-├── .github/workflows/               # CI/CD configuration
-│
+├── .github/workflows/               # CI/CD pipeline
 ├── reports/
 │   └── Final_Report.pdf
-│
 ├── requirements.txt
 └── README.md
 ```
+
+The structure separates data engineering logic from exploratory analysis, improving maintainability and scalability.
 
 ---
 
@@ -75,42 +72,39 @@ mobile-banking-review-analysis/
 
 ---
 
-## 1️⃣ Data Collection & Cleaning
+## 1️⃣ Data Collection & Preprocessing
 
 **Tools Used:**
-
-* `google_play_scraper`
-* Python
-* Pandas
+Python, Pandas, `google_play_scraper`
 
 ### Process:
 
 * Scraped 499 Google Play reviews across:
 
-  * BOA
-  * CBE
-  * Dashen
-* Removed duplicates
-* Cleaned null/empty reviews
+  * Commercial Bank of Ethiopia (CBE)
+  * Bank of Abyssinia (BOA)
+  * Dashen Bank
+* Removed duplicate entries
+* Cleaned null and empty reviews
 * Standardized date formats
-* Normalized text (lowercase, cleaned whitespace)
+* Normalized text (lowercasing, whitespace cleaning)
 
 **Output:**
-`ethiopian_bank_reviews.csv`
+Structured dataset ready for NLP processing.
 
 ---
 
 ## 2️⃣ Sentiment Analysis
 
-**Method:** VADER Sentiment Analyzer
+**Method:** VADER (Valence Aware Dictionary for Sentiment Reasoning)
 
-### Classification:
+### Classification Thresholds:
 
 * Positive → compound > 0.05
 * Neutral → -0.05 ≤ compound ≤ 0.05
 * Negative → compound < -0.05
 
-### Results:
+### Results Summary:
 
 | Sentiment | Count |
 | --------- | ----- |
@@ -118,39 +112,45 @@ mobile-banking-review-analysis/
 | Neutral   | 190   |
 | Negative  | 59    |
 
-Dashen shows the highest average sentiment score, indicating relatively stronger customer satisfaction.
+Dashen Bank shows the highest average sentiment score, indicating relatively stronger customer satisfaction compared to competitors.
 
 ---
 
 ## 3️⃣ Thematic Analysis
 
-To identify key user concerns and satisfaction drivers:
+To identify recurring user concerns and satisfaction drivers:
 
-* Extracted keywords (TF-IDF + noun extraction)
-* Grouped into structured themes:
+* Extracted keywords using TF-IDF
+* Performed noun-based theme grouping
+* Categorized reviews into structured themes:
 
   * User Interface & Experience
   * Account Access Issues
   * Transaction Performance
   * Customer Support
   * Feature Requests
-  * Technical Issues
+  * Technical Stability Issues
 
-### Key Insight:
+### Key Findings:
 
-UI/UX is the dominant satisfaction driver across all banks.
-Technical stability and login issues appear as recurring pain points.
+* **UI/UX quality** is the strongest satisfaction driver.
+* **Login failures and technical instability** are recurring pain points across multiple banks.
+* Transaction-related complaints significantly impact negative sentiment.
 
 ---
 
 ## 4️⃣ Database Integration (Task 3)
 
-* Designed relational PostgreSQL schema
-* Structured tables for banks and reviews
-* Implemented safe insert logic
-* Enforced constraints to prevent duplicates
+A relational PostgreSQL schema was designed to ensure scalable and structured storage.
 
-This ensures scalable storage and future extensibility.
+### Implementation Highlights:
+
+* Normalized tables for banks and reviews
+* Foreign key constraints for referential integrity
+* Conflict handling to prevent duplicate insertions
+* Structured schema for future extensibility
+
+This enables reliable long-term storage and advanced querying capabilities.
 
 ---
 
@@ -158,57 +158,60 @@ This ensures scalable storage and future extensibility.
 
 The analysis generated:
 
-* Comparative sentiment distribution per bank
-* Top themes per bank
-* Identification of customer pain points
-* Actionable recommendations for product teams
+* Sentiment distribution comparison per bank
+* Rating distribution trends
+* Top recurring themes per institution
+* Clear identification of drivers and pain points
 
-Example:
+### Example Recommendations:
 
-* Improve UI/UX consistency for BOA and CBE
-* Investigate recurring login and bug-related complaints
-* Maintain Dashen’s strong design advantage
+* Improve technical stability to reduce crash-related complaints
+* Strengthen authentication systems to minimize login issues
+* Maintain and enhance intuitive UI features (Dashen advantage)
+* Introduce budgeting and in-app tracking features
+
+These recommendations align directly with observed user sentiment patterns.
 
 ---
 
-# ⚙ Engineering Improvements (Capstone Enhancement)
+# ⚙ Engineering Enhancements
 
-To elevate this project beyond analysis:
+This project was elevated beyond exploratory analysis into a production-style system.
 
-### ✅ Modular Code Architecture
+### ✅ Modular Codebase
 
-Refactored into `src/` structure for maintainability.
+Refactored scripts into a `src/` structure for maintainability and reusability.
 
 ### ✅ Automated Testing
 
-* 6 unit tests implemented using pytest
-* Validates cleaning, sentiment classification, and theme extraction
+* 6 unit tests implemented using Pytest
+* Validates preprocessing, sentiment classification, and theme extraction logic
 
-### ✅ CI/CD Integration
+### ✅ Continuous Integration
 
 GitHub Actions pipeline:
 
 * Installs dependencies
-* Runs tests automatically
-* Prevents broken commits
+* Runs automated tests
+* Prevents merging broken code
 
-This ensures reliability and reproducibility.
+This ensures reliability, reproducibility, and professional development standards.
 
 ---
 
 # 📊 Metrics of Success
 
 * 100% of reviews classified into sentiment categories
-* 0 failing unit tests
-* CI/CD passing consistently
-* No duplicate database records
-* Insights reproducible across runs
+* Zero duplicate database records
+* All unit tests passing
+* CI/CD pipeline stable and reproducible
+* Clear identification of at least 2 drivers and 2 pain points per bank
 
 ---
 
 # 🛠 How to Run
 
-### 1️⃣ Create Environment
+### 1️⃣ Create Virtual Environment
 
 ```bash
 python -m venv .venv
@@ -222,7 +225,7 @@ source .venv/bin/activate      # Mac/Linux
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Run Pipeline
+### 3️⃣ Execute Pipeline
 
 ```bash
 python -m src.scraping
@@ -231,37 +234,37 @@ python -m src.sentiment
 python -m src.themes
 ```
 
-Or explore the notebooks for step-by-step analysis.
+Alternatively, explore the notebooks for step-by-step analysis and visualizations.
 
 ---
 
 # 📈 Future Improvements
 
 * Expand dataset to 1500+ reviews
-* Implement advanced topic modeling (LDA / BERTopic)
+* Implement advanced topic modeling (LDA or BERTopic)
+* Replace VADER with transformer-based models (e.g., fine-tuned BERT)
 * Deploy as REST API
-* Build Streamlit dashboard for stakeholders
-* Add performance benchmarks
+* Build a Streamlit dashboard for stakeholder visualization
+* Add performance monitoring and logging
 
 ---
 
 # 👩‍💻 Author
 
-**Kalkidan Asdesach**
-AI & Data Engineering Enthusiast
+**Kalkidan Asdesach Tekle**
+AI Engineer (NLP Focus)
 10 Academy – AI Mastery Program
 
 ---
 
-# 🌟 Why This Project Matters
+# 🌟 Project Impact
 
 This capstone demonstrates:
 
-* End-to-end data pipeline design
-* NLP for real-world business applications
-* Database engineering
-* Testing & CI/CD best practices
-* Project planning and iteration
+* End-to-end NLP pipeline design
+* Real-world business application of AI
+* Relational database engineering
+* Automated testing and CI/CD integration
+* Scalable project architecture
 
-It reflects both **technical capability and engineering maturity**.
-
+It reflects both **technical capability and engineering discipline**, aligning AI solutions with measurable business value.
